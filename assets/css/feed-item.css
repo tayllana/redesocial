@@ -13,7 +13,7 @@
     border-radius:50%;
 }
 .fidi-name {
-    color:#224b7a;
+    color:#1c0e8b;
     font-size:16px;
     display:inline-block;
     margin-right:5px;
@@ -93,7 +93,7 @@
 .fic-item-info a {
     display:block;
     margin-bottom:5px;
-    color:#224b7a;
+    color:#1c0e8b;
     font-size:14px;
     text-decoration: none;
 }
