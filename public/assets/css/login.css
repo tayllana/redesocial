@@ -88,7 +88,7 @@ form .button {
     margin-top: 20px;
 }
 form .button:hover {
-    background-color:#477dbb;
+    background-color:#4b14ee;
 }
 form a {
     text-decoration:none;
@@ -101,4 +101,8 @@ form a {
     @media (max-width: 425px) {
         display:none;
     }
+}
+.flash{
+    margin-bottom: 20px; 
+    color: #c91e1e;
 }

@@ -24,5 +24,39 @@ class LoginHandlers {
             $_SESSION['usuario'] = false;
         }    
     }
+
+    public static function verifyLogin($email, $password){
+        $user = Usuario::select()->where('email',$email)->one();
+        if($user){
+            if(password_verify($password, $user['password'])){
+                $token = md5(time().rand(0,9999).time());
+                Usuario::update()->set('token', $token)->where('id', $user['id'])->execute();
+                $_SESSION['usuario'] = $user;
+                return $token; 
+            }
+
+        }
+        return false;  
+    }
+
+    public static function emailExists($email){
+        $user = Usuario::select()->where('email',$email)->one();
+        return $user? true: false;
+    }
+    public static function insertUser($email, $nome, $password, $nascimento){
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $token = md5(time().rand(0,9999).time());
+        Usuario::insert([
+            'email' => $email, 
+            'nome' => $nome, 
+            'senha' => $password, 
+            'aniversario' => $nascimento,
+            'avatar' => 'default.jpg',
+            'capa' => 'cover.jpg',
+            'token' => $token
+        ])->execute();
+        return $token;
+    
+    }
     
 }
