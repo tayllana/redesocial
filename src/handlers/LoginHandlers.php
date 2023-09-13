@@ -35,21 +35,23 @@ class LoginHandlers {
         return $user? true: false;
     }
     public static function insertUser($email, $nome, $password, $nascimento){
-            $token = md5(time().rand(0,9999).time());
-            try {
-                Usuario::insert([
-                    'email' => $email, 
-                    'nome' => $nome, 
-                    'senha' => password_hash($password, PASSWORD_DEFAULT), 
-                    'aniversario' => $nascimento,
-                    'avatar' => 'default.jpg',
-                    'capa' => 'cover.jpg',
-                    'token' => $token
-                ])->execute();
-                return $token;
-            } catch (\Exception $e) {
-                return "Erro ao inserir os dados: " . $e->getMessage();
-            }
+        $token = md5(time().rand(0,9999).time());
+        try {
+            Usuario::insert([
+                'email' => $email, 
+                'nome' => $nome, 
+                'senha' => password_hash($password, PASSWORD_DEFAULT), 
+                'aniversario' => $nascimento,
+                'avatar' => 'default.jpg',
+                'capa' => 'cover.jpg',
+                'token' => $token
+            ])->execute();
+            return $token;
+            // $user = Usuario::select()->where('email',$email)->one();
+            // return $user->email;
+        } catch (\Exception $e) {
+            return "Erro ao inserir os dados: " . $e->getMessage();
+        }
     }
     
 }
