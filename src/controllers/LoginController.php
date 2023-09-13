@@ -30,7 +30,7 @@ class LoginController extends Controller {
 
         }else{
             $_SESSION['flash'] = 'Digite os campos de email e/ou senha!';
-            $this->redirect('login');
+            $this->redirect('/login');
         }
     }
     public function signup() {
@@ -49,9 +49,9 @@ class LoginController extends Controller {
 
         if($email && $nome && $password && $nascimento){
             $nascimento = explode('/', $nascimento);
-            if(count($nascimento) != 3 || !strtotime($nascimento[2].'-'.$nascimento[1].'-'.$nascimento[0])){
+            if(count($nascimento) != 3 || strtotime($nascimento[2].'-'.$nascimento[1].'-'.$nascimento[0]) == false){
                 $_SESSION['flash'] = 'Data de nascimento inválida!';
-                $this->redirect('cadastro');
+                $this->redirect('/cadastro');
             }
             if(!LoginHandlers::emailExists($email)){
                 $_SESSION['token'] = LoginHandlers::insertUser($email, $nome, $password, $nascimento[2].'-'.$nascimento[1].'-'.$nascimento[0]);
@@ -61,7 +61,7 @@ class LoginController extends Controller {
             }
         }else{
             $_SESSION['flash'] = 'Todos os campos devem ser preenchidos!';
-            $this->redirect('cadastro');
+            $this->redirect('/cadastro');
         }
     }
 

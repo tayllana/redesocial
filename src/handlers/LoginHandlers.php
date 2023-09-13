@@ -11,15 +11,6 @@ class LoginHandlers {
             if($_SESSION['usuario'] <= 0){
                 $_SESSION['usuario'] = false;
             }
-            // $data = Usuario::select()->where('token',$token)->one();
-            // if(count($data)>0){
-            //     $_SESSION['usuario'] = new Usuario; 
-            //     $_SESSION['usuario']->id = $data['id']; 
-            //     $_SESSION['usuario']->email = $data['email']; 
-            //     $_SESSION['usuario']->nome = $data['nome'];
-            // }else{
-            //     $_SESSION['usuario'] = false;
-            // }
         }else{
             $_SESSION['usuario'] = false;
         }    
@@ -40,23 +31,26 @@ class LoginHandlers {
     }
 
     public static function emailExists($email){
-        $user = Usuario::select()->where('email',$email)->one();
-        return $user? true: false;
+        // $user = Usuario::select()->where('email',$email)->one();
+        // return $user? true: false;
+        return false;
     }
     public static function insertUser($email, $nome, $password, $nascimento){
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $token = md5(time().rand(0,9999).time());
-        Usuario::insert([
-            'email' => $email, 
-            'nome' => $nome, 
-            'senha' => $password, 
-            'aniversario' => $nascimento,
-            'avatar' => 'default.jpg',
-            'capa' => 'cover.jpg',
-            'token' => $token
-        ])->execute();
-        return $token;
-    
+            $token = md5(time().rand(0,9999).time());
+            try {
+                Usuario::insert([
+                    'email' => $email, 
+                    'nome' => $nome, 
+                    'senha' => password_hash($password, PASSWORD_DEFAULT), 
+                    'aniversario' => $nascimento,
+                    'avatar' => 'default.jpg',
+                    'capa' => 'cover.jpg',
+                    'token' => $token
+                ])->execute();
+                return $token;
+            } catch (\Exception $e) {
+                return "Erro ao inserir os dados: " . $e->getMessage();
+            }
     }
     
 }
