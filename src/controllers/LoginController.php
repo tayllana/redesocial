@@ -64,5 +64,4 @@ class LoginController extends Controller {
             $this->redirect('/cadastro');
         }
     }
-
 }

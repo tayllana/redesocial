@@ -31,9 +31,8 @@ class LoginHandlers {
     }
 
     public static function emailExists($email){
-        // $user = Usuario::select()->where('email',$email)->one();
-        // return $user? true: false;
-        return false;
+        $user = Usuario::select()->where('email',$email)->one();
+        return $user? true: false;
     }
     public static function insertUser($email, $nome, $password, $nascimento){
             $token = md5(time().rand(0,9999).time());
