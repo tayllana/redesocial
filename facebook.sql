@@ -1,34 +1,13 @@
--- phpMyAdmin SQL Dump
--- version 5.0.1
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Tempo de geração: 19-Set-2023 às 22:56
--- Versão do servidor: 10.4.11-MariaDB
--- versão do PHP: 7.4.3
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Banco de dados: `facebook`
 --
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `Comentario`
---
-
-CREATE TABLE `Comentario` (
+CREATE TABLE `comentarios` (
   `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
@@ -36,38 +15,23 @@ CREATE TABLE `Comentario` (
   `conteudo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `Post`
---
-
-CREATE TABLE `Post` (
+CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `type` varchar(100) NOT NULL,
   `data` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `conteudo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `Relacionamento`
---
 
-CREATE TABLE `Relacionamento` (
+CREATE TABLE `relacionamentos` (
   `id` int(11) NOT NULL,
   `de` int(11) NOT NULL,
   `para` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `Usuario`
---
-
-CREATE TABLE `Usuario` (
+CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(200) NOT NULL,
@@ -80,92 +44,45 @@ CREATE TABLE `Usuario` (
   `token` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `Usuario`
---
-
-INSERT INTO `Usuario` (`id`, `email`, `senha`, `nome`, `aniversario`, `cidade`, `emprego`, `avatar`, `capa`, `token`) VALUES
-(3, 'tayllanawislla@gmail.com', '123', 'aa', NULL, NULL, NULL, NULL, NULL, NULL);
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices para tabela `Comentario`
---
-ALTER TABLE `Comentario`
+ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `post_id` (`post_id`),
   ADD KEY `usuario_id` (`usuario_id`);
 
---
--- Índices para tabela `Post`
---
-ALTER TABLE `Post`
+ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
---
--- Índices para tabela `Relacionamento`
---
-ALTER TABLE `Relacionamento`
+
+ALTER TABLE `relacionamentos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `de` (`de`),
   ADD KEY `para` (`para`);
 
---
--- Índices para tabela `Usuario`
---
-ALTER TABLE `Usuario`
+
+ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT de tabelas despejadas
---
 
---
--- AUTO_INCREMENT de tabela `Comentario`
---
-ALTER TABLE `Comentario`
+ALTER TABLE `comentarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `Post`
---
-ALTER TABLE `Post`
+
+ALTER TABLE `posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `Relacionamento`
---
-ALTER TABLE `Relacionamento`
+
+ALTER TABLE `relacionamentos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de tabela `Usuario`
---
-ALTER TABLE `Usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
---
--- Restrições para despejos de tabelas
---
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- Limitadores para a tabela `Comentario`
---
-ALTER TABLE `Comentario`
-  ADD CONSTRAINT `Comentario_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `Post` (`id`),
-  ADD CONSTRAINT `Comentario_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `Usuario` (`id`);
+ALTER TABLE `comentarios`
+  ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
+  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
---
--- Limitadores para a tabela `Relacionamento`
---
-ALTER TABLE `Relacionamento`
-  ADD CONSTRAINT `Relacionamento_ibfk_1` FOREIGN KEY (`de`) REFERENCES `Usuario` (`id`),
-  ADD CONSTRAINT `Relacionamento_ibfk_2` FOREIGN KEY (`para`) REFERENCES `Usuario` (`id`);
+ALTER TABLE `relacionamentos`
+  ADD CONSTRAINT `relacionamentos_ibfk_1` FOREIGN KEY (`de`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `relacionamentos_ibfk_2` FOREIGN KEY (`para`) REFERENCES `usuarios` (`id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
