@@ -1,4 +1,4 @@
-<?php $render('header'); ?>
+<?php $render('header', ['loggedUser' => $loggedUser]); ?>
         <div class="row">
             <div class="column pr-5">
 
@@ -6,12 +6,12 @@
                     <div class="box-body">
                         <div class="feed-new-editor m-10 row">
                             <div class="feed-new-avatar">
-                                <img src="media/avatars/avatar.jpg" />
+                                <img src="media/avatars/<?= $loggedUser['avatar'] ?>" />
                             </div>
-                            <div class="feed-new-input-placeholder">O que você está pensando, Bonieky?</div>
+                            <div class="feed-new-input-placeholder">O que você está pensando, <?= $loggedUser['nome'] ?>?</div>
                             <div class="feed-new-input" contenteditable="true"></div>
                             <div class="feed-new-send">
-                                <img src="assets/images/send.png" />
+                                <img src="<?=$base?>/assets/images/send.png" />
                             </div>
                         </div>
                     </div>
@@ -21,16 +21,16 @@
                     <div class="box-body">
                         <div class="feed-item-head row mt-20 m-width-20">
                             <div class="feed-item-head-photo">
-                                <a href=""><img src="media/avatars/avatar.jpg" /></a>
+                                <a href=""><img src="media/avatars/<?= $loggedUser['avatar'] ?>" /></a>
                             </div>
                             <div class="feed-item-head-info">
-                                <a href=""><span class="fidi-name">Bonieky Lacerda</span></a>
+                                <a href=""><span class="fidi-name"><?= $loggedUser['nome'] ?></span></a>
                                 <span class="fidi-action">fez um post</span>
                                 <br />
                                 <span class="fidi-date">07/03/2020</span>
                             </div>
                             <div class="feed-item-head-btn">
-                                <img src="assets/images/more.png" />
+                                <img src="<?=$base?>/assets/images/more.png" />
                             </div>
                         </div>
                         <div class="feed-item-body mt-10 m-width-20">
@@ -46,27 +46,27 @@
 
                             <div class="fic-item row m-height-10 m-width-20">
                                 <div class="fic-item-photo">
-                                    <a href=""><img src="media/avatars/avatar.jpg" /></a>
+                                    <a href=""><img src="media/avatars/<?= $loggedUser['avatar'] ?>" /></a>
                                 </div>
                                 <div class="fic-item-info">
-                                    <a href="">Bonieky Lacerda</a>
+                                    <a href=""><?= $loggedUser['nome'] ?></a>
                                     Comentando no meu próprio post
                                 </div>
                             </div>
 
                             <div class="fic-item row m-height-10 m-width-20">
                                 <div class="fic-item-photo">
-                                    <a href=""><img src="media/avatars/avatar.jpg" /></a>
+                                    <a href=""><img src="media/avatars/<?= $loggedUser['avatar'] ?>" /></a>
                                 </div>
                                 <div class="fic-item-info">
-                                    <a href="">Bonieky Lacerda</a>
+                                    <a href=""><?= $loggedUser['nome'] ?></a>
                                     Muito legal, parabéns!
                                 </div>
                             </div>
 
                             <div class="fic-answer row m-height-10 m-width-20">
                                 <div class="fic-item-photo">
-                                    <a href=""><img src="media/avatars/avatar.jpg" /></a>
+                                    <a href=""><img src="media/avatars/<?= $loggedUser['avatar'] ?>" /></a>
                                 </div>
                                 <input type="text" class="fic-item-field" placeholder="Escreva um comentário" />
                             </div>
@@ -87,9 +87,9 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <a href=""><img src="assets/images/php.jpeg" /></a>
-                        <a href=""><img src="assets/images/js.png" /></a>
-                        <a href=""><img src="assets/images/mvc.png" /></a>
+                        <a href=""><img src="<?=$base?>/assets/images/php.jpeg" /></a>
+                        <a href=""><img src="<?=$base?>/assets/images/js.png" /></a>
+                        <a href=""><img src="<?=$base?>/assets/images/mvc.png" /></a>
                     </div>
                 </div>
                 <div class="box">
