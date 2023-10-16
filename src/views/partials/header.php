@@ -10,7 +10,7 @@
     <header>
         <div class="container">
             <div class="logo">
-                <a href="<?=$base?>/"><img src="<?=$base?>/assets/images/devsbook_logo.png" /></a>
+                <a href="<?=$base?>/"><img src="<?=$base?>/assets/images/@.png" /><img src="<?=$base?>/assets/images/redesocial.png" /></a>
             </div>
             <div class="head-side">
                 <div class="head-side-left">
