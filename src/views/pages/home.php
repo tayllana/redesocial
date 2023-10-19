@@ -3,10 +3,14 @@
             <div class="column pr-5">
                 <?php $render('feed-editor', ['loggedUser' => $loggedUser])?>
 
-                <?php foreach ($feed as $key => $post) { ?>
+                <?php foreach ($feed['posts'] as $key => $post) { ?>
                     <?= $render('feed-item', ['post' => $post])?>
                 <?php }?>
-                
+                <div class="feed-pagination">
+                    <?php for ($i=0; $i < $feed['qtdPaginas']; $i++) { ?>
+                        <a class="<?= $i == $feed['paginaAtual']?'active': '' ?>" href="<?= $base; ?>/?pagina=<?= $i?>"><?= $i + 1?></a>
+                    <?php } ?>
+                </div>
             </div>
             <div class="column side pl-5">
                 <div class="box banners">

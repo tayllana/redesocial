@@ -16,7 +16,8 @@ class HomeController extends Controller {
         }
     }
     public function index() {
-        $feed = PostHandlers::getHomeFeed($this->loggedUser['id']);
+        $pagina = intval(filter_input(INPUT_GET, 'pagina'));
+        $feed = PostHandlers::getHomeFeed($this->loggedUser['id'], $pagina);
         $this->render('home', [
             'loggedUser' => $this->loggedUser,
             'feed' => $feed

@@ -391,7 +391,25 @@ header .head-side {
 .full-user-photos .user-photo-item {
     margin:0;
 }
-
+.feed-pagination a{
+    display: inline-block;
+    padding: 7px 10px;
+    border: 1px solid #CCC;
+    margin: 5px;
+    text-decoration: none;
+    background-color: #FFF;
+    color:  #5c2cf1;
+    font-weight: bolder;
+    border-radius: 10px;
+}
+.feed-pagination a.active {
+    background-color: #5c2cf1;
+    color: #fff;
+}
+.feed-pagination a:hover {
+    background-color: #5d2cf160;
+    /* color: #fff; */
+}
 @media (max-width: 992px) {
     header .head-side-right {
         display:none !important;

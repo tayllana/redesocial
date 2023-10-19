@@ -6,7 +6,7 @@ use \src\models\Relacionamento;
 
 class PostHandlers {
 
-    public static function getHomeFeed($usuario){
+    public static function getHomeFeed($usuario, $pagina){
         $listAmigos = Relacionamento::select()->where('de', $usuario)->get();
         $amizades = [];
         foreach ($listAmigos as $key => $amigo) {
@@ -14,7 +14,9 @@ class PostHandlers {
         }
         $amizades[] = $usuario;
 
-        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->get();
+        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
+        $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
         $posts = [];
         foreach ($listPosts as $key => $post) {
             $newPost = new Post();
@@ -40,7 +42,7 @@ class PostHandlers {
             
             $posts[] = $newPost;
         }
-        return $posts;
+        return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
     }
 
     public static function addPost($usuario, $tipo, $conteudo){
