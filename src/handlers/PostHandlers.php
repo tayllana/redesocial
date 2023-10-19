@@ -22,6 +22,11 @@ class PostHandlers {
             $newPost->type = $post['type'];
             $newPost->data = $post['data'];
             $newPost->conteudo = $post['conteudo'];
+            $newPost->meu = false;
+
+            if($post['id'] == $usuario){
+                $newPost->meu = true;
+            }
             
             $newUsuario = Usuario::select()->where('id', $post['id_usuario'])->one();
             $newPost->usuario = new Usuario();
@@ -29,6 +34,10 @@ class PostHandlers {
             $newPost->usuario->nome = $newUsuario['nome'];
             $newPost->usuario->avatar = $newUsuario['avatar'];
 
+            $newPost->likes = 0;
+            $newPost->liked = false;
+            $newPost->comentarios = [];
+            
             $posts[] = $newPost;
         }
         return $posts;
