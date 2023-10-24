@@ -1,6 +1,8 @@
 <?php
 namespace src\handlers;
+use \src\models\Post;
 use \src\models\Usuario;
+use \src\models\Relacionamento;
 
 class UserHandlers {
 
@@ -55,6 +57,26 @@ class UserHandlers {
             $usuario->seguidores = [];
             $usuario->seguindo = [];
             $usuario->fotos = [];
+
+            $seguidores = Relacionamento::select()->where('para', $id)->get();
+            foreach ($seguidores as $key => $seguidor) {
+                $dados = Usuario::select()->where('id', $seguidor['de'])->one;
+                $novoUsuario = new Usuario();
+                $novoUsuario->id = $dados['id'];
+                $novoUsuario->nome = $dados['nome'];
+                $novoUsuario->avatar = $dados['avatar'];
+                $usuario->seguidores[] = $novoUsuario;
+            }
+
+            $seguindo = Relacionamento::select()->where('de', $id)->get();
+            foreach ($seguindo as $key => $seguidor) {
+                $dados = Usuario::select()->where('id', $seguidor['para'])->one;
+                $novoUsuario = new Usuario();
+                $novoUsuario->id = $dados['id'];
+                $novoUsuario->nome = $dados['nome'];
+                $novoUsuario->avatar = $dados['avatar'];
+                $usuario->seguindo[] = $novoUsuario;
+            }
             return $usuario;
         }
         return false;
