@@ -2,7 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandlers;
+use \src\handlers\UserHandlers;
 
 class LoginController extends Controller {
     
@@ -19,7 +19,7 @@ class LoginController extends Controller {
         $password = filter_input(INPUT_POST, 'password');
 
         if($email && $password){
-            $token = LoginHandlers::verifyLogin($email, $password);
+            $token = UserHandlers::verifyLogin($email, $password);
             if($token){ 
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
@@ -53,8 +53,8 @@ class LoginController extends Controller {
                 $_SESSION['flash'] = 'Data de nascimento inválida!';
                 $this->redirect('/cadastro');
             }
-            if(!LoginHandlers::emailExists($email)){
-                $_SESSION['token'] = LoginHandlers::insertUser($email, $nome, $password, $nascimento[2].'-'.$nascimento[1].'-'.$nascimento[0]);
+            if(!UserHandlers::emailExists($email)){
+                $_SESSION['token'] = UserHandlers::insertUser($email, $nome, $password, $nascimento[2].'-'.$nascimento[1].'-'.$nascimento[0]);
                 $this->redirect('/');
             }else{
                 $_SESSION['flash'] = 'E-mail já cadastrado!';
