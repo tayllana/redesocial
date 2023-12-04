@@ -42,7 +42,7 @@
 
                         <div class="user-info-mini">
                             <img src="<?= $base ?>/assets/images/calendar.png" />
-                            01/01/1930 (90 anos)
+                            <?= date('d/m/Y', strtotime($usuario->aniversario)); ?> (<?= $usuario->idade ?>)
                         </div>
 
                         <?php if(!empty($usuario->cidade)){?>
@@ -104,41 +104,18 @@
                     </div>
                     <div class="box-body row m-20">
 
-                        <div class="user-photo-item">
-                            <a href="#modal-1" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-1" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-2" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-2" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-3" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-3" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-4" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-4" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
+                        <?php for ($i=0; $i < 4; $i++) { 
+                            if(isset($usuario->fotos[$i])){ ?>
+                                <div class="user-photo-item">
+                                    <a href="#modal-<?= $usuario->fotos[$i]->id?>" rel="modal:open">
+                                        <img src="<?= $base ?>/media/uploads/<?= $usuario->fotos[$i]->conteudo?>" />
+                                    </a>
+                                    <div id="modal-<?= $usuario->fotos[$i]->id?>" style="display:none">
+                                        <img src="<?= $base ?>/media/uploads/<?= $usuario->fotos[$i]->conteudo?>" />
+                                    </div>
+                                </div>
+                        <?php } 
+                    } ?>
 
                     </div>
                 </div>

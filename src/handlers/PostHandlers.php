@@ -6,17 +6,7 @@ use \src\models\Relacionamento;
 
 class PostHandlers {
 
-    public static function getHomeFeed($usuario, $pagina){
-        $listAmigos = Relacionamento::select()->where('de', $usuario)->get();
-        $amizades = [];
-        foreach ($listAmigos as $key => $amigo) {
-            $amizades = $amigo['para'];
-        }
-        $amizades[] = $usuario;
-
-        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
-        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
-        $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
+    public function _postListToObject($listPosts, $usuario){
         $posts = [];
         foreach ($listPosts as $key => $post) {
             $newPost = new Post();
@@ -42,6 +32,28 @@ class PostHandlers {
             
             $posts[] = $newPost;
         }
+        return $posts;
+    }
+    public static function getUserFeed($usuario, $pagina, $loggedUser){
+
+        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
+        $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
+        $posts = $posts = self::_postListToObject($listPosts, $loggedUser);
+        return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
+    }
+    public static function getHomeFeed($usuario, $pagina){
+        $listAmigos = Relacionamento::select()->where('de', $usuario)->get();
+        $amizades = [];
+        foreach ($listAmigos as $key => $amigo) {
+            $amizades = $amigo['para'];
+        }
+        $amizades[] = $usuario;
+
+        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
+        $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
+        $posts = self::_postListToObject($listPosts, $usuario);
         return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
     }
 
@@ -59,5 +71,19 @@ class PostHandlers {
             return "Erro ao inserir os dados: " . $e->getMessage();
         }
     }
+    public function getFotos($usuario){
+        $response = Post::select()->where('id_usuario', $usuario)->where('type', 'photo')->get();
+        $fotos = [];
+        foreach ($response as $key => $foto) {
+            $newPost = new Post();
+            $newPost->id = $foto['id'];
+            $newPost->type = $foto['type'];
+            $newPost->data = $foto['data'];
+            $newPost->conteudo = $foto['conteudo'];
+            $fotos[] = $newPost;
+        }
+        return $fotos;
+    }
+
     
 }

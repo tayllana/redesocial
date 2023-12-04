@@ -21,9 +21,11 @@ class PerfilController extends Controller {
         if(!$usuario){
             $this->redirect('/');
         } 
+        $feed = PostHandlers::getUserFeed($id, intval(filter_input(INPUT_GET, 'pagina')), $this->loggedUser['id']);
         $this->render('perfil', [
             'loggedUser' => $this->loggedUser,
-            'usuario' => $usuario
+            'usuario' => $usuario,
+            'feed' => $feed
         ]);
     }
 

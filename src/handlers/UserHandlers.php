@@ -1,5 +1,7 @@
 <?php
 namespace src\handlers;
+
+use src\handlers\PostHandlers;
 use \src\models\Post;
 use \src\models\Usuario;
 use \src\models\Relacionamento;
@@ -53,6 +55,7 @@ class UserHandlers {
             $usuario->emprego = $response['emprego'];
             $usuario->avatar = $response['avatar'];
             $usuario->capa = $response['capa'];
+            $usuario->idade = (new \DateTime($response['aniversario']))->diff(new \DateTime('today'))->y;
 
             $usuario->seguidores = [];
             $usuario->seguindo = [];
@@ -77,6 +80,8 @@ class UserHandlers {
                 $novoUsuario->avatar = $dados['avatar'];
                 $usuario->seguindo[] = $novoUsuario;
             }
+            $usuario->fotos = PostHandlers::getFotos($id);
+
             return $usuario;
         }
         return false;
