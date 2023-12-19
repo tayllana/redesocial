@@ -14,7 +14,19 @@
                             <div class="profile-info-name-text"><?= $usuario->nome ?></div>
                             <div class="profile-info-location"><?= $usuario->cidade ?></div>
                         </div>
-                        <div class="profile-info-data row">
+                        
+                        <div class="profile-info-data row">                            
+                            <?php if ($usuario->id != $loggedUser['id']) {?>
+                                <div class="profile-info-item m-width-20">
+                                <a href="<?=$base?>/perfil/<?=$usuario->id?>/follow" class="button" style="margin-top: 0px;">
+                                <?php if($seguindo){ ?>
+                                        Deixar de seguir
+                                    <?php }else{?>
+                                        Seguir
+                                    <?php }?>
+                                    </a>
+                                </div>
+                            <?php }?>
                             <div class="profile-info-item m-width-20">
                                 <div class="profile-info-item-n"><?= count($usuario->seguidores) ?></div>
                                 <div class="profile-info-item-s">Seguidores</div>
@@ -99,7 +111,7 @@
                             <span>(<?= count($usuario->fotos) ?>)</span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="">ver todos</a>
+                            <a href="<?=$base?>/perfil/<?= $usuario->id?>/amigos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body row m-20">

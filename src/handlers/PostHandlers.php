@@ -42,18 +42,17 @@ class PostHandlers {
         $posts = $posts = self::_postListToObject($listPosts, $loggedUser);
         return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
     }
-    public static function getHomeFeed($usuario, $pagina){
-        $listAmigos = Relacionamento::select()->where('de', $usuario)->get();
+    public static function getHomeFeed($id, $pagina){
+        $listAmigos = Relacionamento::select()->where('de', $id)->get();
         $amizades = [];
         foreach ($listAmigos as $key => $amigo) {
             $amizades = $amigo['para'];
         }
-        $amizades[] = $usuario;
-
-        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
-        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
+        $amizades[] = $id;
+        $listPosts = Post::select()->where('id_usuario', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $totalPosts = Post::select()->where('id_usuario', 'in', $amizades)->count();
         $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
-        $posts = self::_postListToObject($listPosts, $usuario);
+        $posts = self::_postListToObject($listPosts, $id);
         return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
     }
 

@@ -63,7 +63,7 @@ class UserHandlers {
 
             $seguidores = Relacionamento::select()->where('para', $id)->get();
             foreach ($seguidores as $key => $seguidor) {
-                $dados = Usuario::select()->where('id', $seguidor['de'])->one;
+                $dados = Usuario::select()->where('id', $seguidor['de'])->one();
                 $novoUsuario = new Usuario();
                 $novoUsuario->id = $dados['id'];
                 $novoUsuario->nome = $dados['nome'];
@@ -73,7 +73,7 @@ class UserHandlers {
 
             $seguindo = Relacionamento::select()->where('de', $id)->get();
             foreach ($seguindo as $key => $seguidor) {
-                $dados = Usuario::select()->where('id', $seguidor['para'])->one;
+                $dados = Usuario::select()->where('id', $seguidor['para'])->one();
                 $novoUsuario = new Usuario();
                 $novoUsuario->id = $dados['id'];
                 $novoUsuario->nome = $dados['nome'];
@@ -105,6 +105,27 @@ class UserHandlers {
         } catch (\Exception $e) {
             return "Erro ao inserir os dados: " . $e->getMessage();
         }
+    }
+    public static function isFollowing($de, $para){
+        if(Relacionamento::select()->where('de', $de)->where('para', $para)->one()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static function follow($de, $para){
+        Relacionamento::insert([
+            'de' => $de,
+            'para' => $para,
+        ])->execute();
+        
+    }
+    public static function unfollow($de, $para){
+        Relacionamento::delete()
+        ->where('de', $de)
+        ->where('para', $para)
+        ->execute();
+         
     }
     
 }

@@ -14,13 +14,14 @@ $router->post('/cadastro', 'LoginController@cadastro');
 
 $router->post('/post/new', 'PostController@new');
 
+$router->get('/perfil/{id}/amigos', 'PerfilController@friends');
+$router->get('/perfil/{id}/follow', 'PerfilController@follow');
 $router->get('/perfil/{id}', 'PerfilController@index');
 $router->get('/perfil', 'PerfilController@index');
 
+$router->get('/amigos', 'PerfilController@friends');
+
 
 // $router->get('/pesquisa', '');
-
-// $router->get('/amigos', '');
 // $router->get('/fotos', '');
 // $router->get('/configuracoes', '');
-// $router->get('/sair', '');
