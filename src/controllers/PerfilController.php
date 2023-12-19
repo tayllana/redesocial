@@ -63,4 +63,21 @@ class PerfilController extends Controller {
         ]);
     }
 
+    public function photos($atts = []) {
+        $id = !empty($atts['id'])? $atts['id']: $this->loggedUser['id'];
+        $usuario = UserHandlers::getUsuario($id);
+        if(!$usuario){
+            $this->redirect('/');
+        } 
+        $seguindo = false;
+        if($usuario->id != $this->loggedUser['id']){
+            $seguindo = UserHandlers::isFollowing($this->loggedUser['id'], $usuario->id);
+        }
+        $this->render('perfil_fotos', [
+            'loggedUser' => $this->loggedUser,
+            'usuario' => $usuario,
+            'seguindo' => $seguindo
+        ]);
+    }
+
 }

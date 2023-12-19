@@ -36,7 +36,7 @@ class PostHandlers {
     }
     public static function getUserFeed($usuario, $pagina, $loggedUser){
 
-        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 3)->get();
         $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
         $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
         $posts = $posts = self::_postListToObject($listPosts, $loggedUser);
@@ -49,7 +49,7 @@ class PostHandlers {
             $amizades[] = $amigo['para'];
         }
         $amizades[] = $id;
-        $listPosts = Post::select()->where('id_usuario', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 2)->get();
+        $listPosts = Post::select()->where('id_usuario', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 3)->get();
         $totalPosts = Post::select()->where('id_usuario', 'in', $amizades)->count();
         $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
         $posts = self::_postListToObject($listPosts, $id);
