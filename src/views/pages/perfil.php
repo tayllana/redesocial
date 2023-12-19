@@ -78,7 +78,7 @@
                             <span>(<?= count($usuario->seguindo) ?>)</span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="">ver todos</a>
+                            <a href="<?=$base?>/perfil/<?= $usuario->id?>/amigos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body friend-list">
@@ -111,7 +111,7 @@
                             <span>(<?= count($usuario->fotos) ?>)</span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="<?=$base?>/perfil/<?= $usuario->id?>/amigos">ver todos</a>
+                            <a href="<?=$base?>/perfil/<?= $usuario->id?>/fotos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body row m-20">

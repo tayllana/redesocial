@@ -46,7 +46,7 @@ class PostHandlers {
         $listAmigos = Relacionamento::select()->where('de', $id)->get();
         $amizades = [];
         foreach ($listAmigos as $key => $amigo) {
-            $amizades = $amigo['para'];
+            $amizades[] = $amigo['para'];
         }
         $amizades[] = $id;
         $listPosts = Post::select()->where('id_usuario', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 2)->get();
