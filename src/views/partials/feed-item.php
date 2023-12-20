@@ -3,10 +3,10 @@
     <div class="box-body">
         <div class="feed-item-head row mt-20 m-width-20">
             <div class="feed-item-head-photo">
-                <a href=""><img src="<?=$base;?>/media/avatars/<?= $post->usuario->avatar; ?>" /></a>
+                <a href="<?= $base?>/perfil/<?=$post->usuario->id?>"><img src="<?=$base;?>/media/avatars/<?= $post->usuario->avatar; ?>" /></a>
             </div>
             <div class="feed-item-head-info">
-                <a href=""><span class="fidi-name"><?= $post->usuario->nome ?></span></a>
+                <a href="<?= $base?>/perfil/<?=$post->usuario->id?>"><span class="fidi-name"><?= $post->usuario->nome ?></span></a>
                 <span class="fidi-action">
                     <?php switch($post->type){
                         case 'text':

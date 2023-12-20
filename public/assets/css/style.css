@@ -292,6 +292,9 @@ header .head-side {
 .profile-info-item {
     text-align: center;
 }
+.profile-info-item a {
+    text-decoration: none;
+}
 .profile-info-item-n {
     font-weight: bold;
     font-size:20px;

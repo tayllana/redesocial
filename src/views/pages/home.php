@@ -28,9 +28,9 @@
                     </div>
                 </div>
                 <div class="box">
-                    <div class="box-body m-10">
+                    <!-- <div class="box-body m-10">
                         Criado com ❤️ por B7Web
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
