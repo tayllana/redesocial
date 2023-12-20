@@ -50,6 +50,7 @@ class UserHandlers {
             $usuario = new Usuario();
             $usuario->id = $response['id'];
             $usuario->nome = $response['nome'];
+            $usuario->email = $response['email'];
             $usuario->aniversario = $response['aniversario'];
             $usuario->cidade = $response['cidade'];
             $usuario->emprego = $response['emprego'];
@@ -140,6 +141,22 @@ class UserHandlers {
             }
         }
         return $usuarios;
+    }
+    public static function updateUser($inputs, $id) {
+        if(count($inputs) > 0) {
+
+            $update = Usuario::update();
+
+            foreach($inputs as $chave => $valor) {
+                if($chave == 'senha') {
+                    $valor = password_hash($valor, PASSWORD_DEFAULT);
+                }
+
+                $update->set($chave, $valor);
+            }
+
+            $update->where('id', $id)->execute();
+        }
     }
     
 }

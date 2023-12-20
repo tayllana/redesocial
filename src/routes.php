@@ -26,4 +26,5 @@ $router->get('/fotos', 'PerfilController@photos');
 
 $router->get('/pesquisa', 'SearchController@index');
 
-// $router->get('/configuracoes', '');
+$router->get('/configuracoes', 'ConfigController@index');
+$router->post('/configuracoes', 'ConfigController@save');
