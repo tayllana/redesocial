@@ -80,26 +80,26 @@ class ConfigController extends Controller {
             $inputs['nome'] = $nome;
             $inputs['cidade'] = $cidade;
             $inputs['emprego'] = $emprego;
+            
+            // AVATAR
+            if(isset($_FILES['avatar']) && !empty($_FILES['avatar']['tmp_name'])) {
+                $newAvatar = $_FILES['avatar'];
 
-            // // AVATAR
-            // if(isset($_FILES['avatar']) && !empty($_FILES['avatar']['tmp_name'])) {
-            //     $newAvatar = $_FILES['avatar'];
+                if(in_array($newAvatar['type'], ['image/jpeg', 'image/jpg', 'image/png'])) {
+                    $avatarName = $this->cutImage($newAvatar, 200, 200, "media/avatars");
+                    $inputs['avatar'] = $avatarName;
+                }
+            }
 
-            //     if(in_array($newAvatar['type'], ['image/jpeg', 'image/jpg', 'image/png'])) {
-            //         $avatarName = $this->cutImage($newAvatar, 200, 200, 'media/avatars');
-            //         $inputs['avatar'] = $avatarName;
-            //     }
-            // }
+            // COVER
+            if(isset($_FILES['cover']) && !empty($_FILES['cover']['tmp_name'])) {
+                $newCover = $_FILES['cover'];
 
-            // // COVER
-            // if(isset($_FILES['cover']) && !empty($_FILES['cover']['tmp_name'])) {
-            //     $newCover = $_FILES['cover'];
-
-            //     if(in_array($newCover['type'], ['image/jpeg', 'image/jpg', 'image/png'])) {
-            //         $coverName = $this->cutImage($newCover, 850, 310, 'media/covers');
-            //         $inputs['cover'] = $coverName;
-            //     }
-            // }
+                if(in_array($newCover['type'], ['image/jpeg', 'image/jpg', 'image/png'])) {
+                    $coverName = $this->cutImage($newCover, 850, 310, 'media/covers');
+                    $inputs['capa'] = $coverName;
+                }
+            }
 
             UserHandlers::updateUser($inputs, $this->loggedUser['id']);
 
@@ -144,7 +144,14 @@ class ConfigController extends Controller {
 
         $fileName = md5(time().rand(0,9999)).'.jpg';
 
-        imagejpeg($finalImage, $folder.'/'.$fileName);
+        // imagejpeg($finalImage, "$folder/$fileName");
+        if (!imagejpeg($finalImage, "$folder/$fileName")) {
+            die('Erro ao salvar a imagem.');
+        }
+        $_SESSION[error_get_last()];
+
+
+
 
         return $fileName;
     }

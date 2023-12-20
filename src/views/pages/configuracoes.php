@@ -15,14 +15,14 @@
 
             <label>
                 Novo Avatar<br/>
+                <img style="max-width: 90px;" class="image-edit" src="<?=$base;?>/media/avatars/<?=$usuario->avatar; ?>" />
                 <input type="file" name="avatar" /><br/>
-                <img class="image-edit" src="<?=$base;?>/media/avatars/<?=$usuario->avatar; ?>" />
             </label>
 
             <label>
                 Nova Capa<br/>
+                <img style="max-width: 90px;" class="image-edit" src="<?=$base;?>/media/covers/<?=$usuario->capa; ?>" />
                 <input type="file" name="cover" /><br/>
-                <img class="image-edit" src="<?=$base;?>/media/covers/<?=$usuario->capa; ?>" />
             </label>
 
             <hr  style=" margin-top: 10px;"/>
