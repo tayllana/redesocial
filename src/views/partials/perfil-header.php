@@ -1,11 +1,11 @@
 <div class="row">
     <div class="box flex-1 border-top-flat">
         <div class="box-body">
-            <div class="profile-cover" style="background-image: url('<?= $base ?>/media/covers/<?= $usuario->capa ?>');"></div>
+            <div class="profile-cover" id="coverImg" style="background-image: url('<?= $base ?>/media/covers/<?= $usuario->capa ?>');"></div>
             <div class="profile-info m-20 row">
                 <div class="profile-info-avatar">
                     <a href="<?= $base?>/perfil/<?=$usuario->id?>">
-                        <img src="<?= $base ?>/media/avatars/<?= $usuario->avatar ?>" />
+                        <img style="width: 150px; height: 150px; margin-top: -200px;" id="avatarImg" src="<?= $base ?>/media/avatars/<?= $usuario->avatar ?>" />
                     </a>                         
                 </div>
                 <div class="profile-info-name">
