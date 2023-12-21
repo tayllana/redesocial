@@ -12,11 +12,11 @@
             <h1 style="margin-bottom: 20px; color: #1c0e8b;font-size: 20px;">Configurações</h1>
             <div class="row" style="margin-bottom: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                 <label>
-                    <input type="file" class="custom-file-input" name="avatar" data-content="Selecione um novo avatar" onchange="showImagePreview(this, 'avatarImg')" /><br/>
+                    <input type="file" class="custom-file-input" name="avatar" data-content="Selecione uma nova imagem de perfil" onchange="showImagePreview(this, 'avatarImg')" /><br/>
                 </label>
 
                 <label>
-                    <input type="file" class="custom-file-input" name="cover" data-content="Selecione uma nova Capa" onchange="showImagePreview(this, 'coverImg')" /><br/>
+                    <input type="file" class="custom-file-input" name="cover" data-content="Selecione uma nova imagem de capa" onchange="showImagePreview(this, 'coverImg')" /><br/>
                 </label>
             </div>
             <label>
