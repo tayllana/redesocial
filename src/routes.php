@@ -28,3 +28,7 @@ $router->get('/pesquisa', 'SearchController@index');
 
 $router->get('/configuracoes', 'ConfigController@index');
 $router->post('/configuracoes', 'ConfigController@save');
+
+$router->get('/ajax/like/{id}', 'AjaxController@like');
+$router->post('/ajax/comment', 'AjaxController@comment');
+$router->post('/ajax/upload', 'AjaxController@upload');

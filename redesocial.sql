@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 24, 2023 at 08:09 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Tempo de geração: 21/12/2023 às 18:41
+-- Versão do servidor: 10.4.11-MariaDB
+-- Versão do PHP: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `redesocial`
+-- Banco de dados: `redesocial`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentarios`
+-- Estrutura para tabela `comentarios`
 --
 
 CREATE TABLE `comentarios` (
@@ -39,7 +39,20 @@ CREATE TABLE `comentarios` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Estrutura para tabela `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `data` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `posts`
 --
 
 CREATE TABLE `posts` (
@@ -51,19 +64,20 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `posts`
+-- Despejando dados para a tabela `posts`
 --
 
 INSERT INTO `posts` (`id`, `id_usuario`, `type`, `data`, `conteudo`) VALUES
-(1, 6, 'text', '2023-10-16 19:45:30', 'drg'),
-(2, 6, 'text', '2023-10-16 19:45:33', 'fscd'),
-(3, 6, 'text', '2023-10-16 19:46:15', 'dvsd'),
-(4, 6, 'text', '2023-10-16 21:00:49', 'VocÃª me odeia');
+(1, 4, 'text', '2023-12-19 19:11:39', 'drg'),
+(2, 4, 'text', '2023-12-19 19:11:47', 'fscd'),
+(3, 5, 'text', '2023-12-19 19:11:25', 'dvsd'),
+(4, 5, 'text', '2023-12-19 19:11:13', 'VocÃª me odeia'),
+(5, 7, 'text', '2023-12-19 19:05:25', 'Testando');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `relacionamentos`
+-- Estrutura para tabela `relacionamentos`
 --
 
 CREATE TABLE `relacionamentos` (
@@ -72,10 +86,19 @@ CREATE TABLE `relacionamentos` (
   `para` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `relacionamentos`
+--
+
+INSERT INTO `relacionamentos` (`id`, `de`, `para`) VALUES
+(5, 4, 5),
+(6, 4, 7),
+(7, 7, 5);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estrutura para tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -92,20 +115,20 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `usuarios`
+-- Despejando dados para a tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `senha`, `nome`, `aniversario`, `cidade`, `emprego`, `avatar`, `capa`, `token`) VALUES
 (4, 'tayllanawislla@gmail.com', '$2y$10$sURIjKdzVce1O.5/I0hTPehjcPSsXa56ZKBXNgBafr3E795uLCLUe', 'tayllana Wislla Da Costa Amador', '2000-09-15', NULL, NULL, 'default.jpg', 'cover.jpg', '3e83969720a385ee4f562f5315fcb13b'),
-(5, 'victor.garbin21@gmail.com', '$2y$10$qStMm7nxuOo.oCUhfMYHIeXsOkrU8W/dh3jinx.56lzeInmDINfQK', 'tayllana Wislla Da Costa Amador', '2000-09-15', NULL, NULL, 'default.jpg', 'cover.jpg', '2e68c01ac0c7a55bc81901589b9ce961'),
-(6, 'avictor.garbin21@gmail.com', '$2y$10$TqT7zoC1QPXFtAGrtLhHMetXJ74WDK5vV7rGCFcZvEeeKPgNIELIq', 'Klevson Matheus', '2000-09-15', NULL, NULL, 'default.jpg', 'cover.jpg', '22afb9b4783c7913ae19f9fb0c7b3346');
+(5, 'victor.garbin21@gmail.com', '$2y$10$qStMm7nxuOo.oCUhfMYHIeXsOkrU8W/dh3jinx.56lzeInmDINfQK', 'Victor Roberto Garbin', '2000-09-15', NULL, NULL, 'default.jpg', 'cover.jpg', '2e68c01ac0c7a55bc81901589b9ce961'),
+(7, 'klevson@gmail.com', '$2y$10$rY3GK07iu9plqr3mNfiDhO7XuDC58MKnhL7EU/0rCEeBEfcdLzZwe', 'Klevson Matheus', '2000-09-15', 'Porto Belo', 'Programador', 'a9001d143335576013e92fa086b9c963.jpg', 'b98c1972bf13afc9e9d342673e071cef.jpg', '6b734640c69b78758f32650935ee53f1');
 
 --
--- Indexes for dumped tables
+-- Índices de tabelas apagadas
 --
 
 --
--- Indexes for table `comentarios`
+-- Índices de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`id`),
@@ -113,13 +136,21 @@ ALTER TABLE `comentarios`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Indexes for table `posts`
+-- Índices de tabela `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Índices de tabela `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `relacionamentos`
+-- Índices de tabela `relacionamentos`
 --
 ALTER TABLE `relacionamentos`
   ADD PRIMARY KEY (`id`),
@@ -127,52 +158,54 @@ ALTER TABLE `relacionamentos`
   ADD KEY `para` (`para`);
 
 --
--- Indexes for table `usuarios`
+-- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
--- AUTO_INCREMENT for table `comentarios`
+-- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT de tabela `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `relacionamentos`
+-- AUTO_INCREMENT de tabela `relacionamentos`
 --
 ALTER TABLE `relacionamentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- Restrições para dumps de tabelas
+--
 
 --
--- Constraints for dumped tables
---
-
---
--- Constraints for table `comentarios`
+-- Restrições para tabelas `comentarios`
 --
 ALTER TABLE `comentarios`
   ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Constraints for table `relacionamentos`
+-- Restrições para tabelas `relacionamentos`
 --
 ALTER TABLE `relacionamentos`
   ADD CONSTRAINT `relacionamentos_ibfk_1` FOREIGN KEY (`de`) REFERENCES `usuarios` (`id`),

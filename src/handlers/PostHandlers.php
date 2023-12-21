@@ -1,6 +1,9 @@
 <?php
 namespace src\handlers;
+
+use \src\models\Comentario;
 use \src\models\Post;
+use \src\models\Like;
 use \src\models\Usuario;
 use \src\models\Relacionamento;
 
@@ -26,9 +29,14 @@ class PostHandlers {
             $newPost->usuario->nome = $newUsuario['nome'];
             $newPost->usuario->avatar = $newUsuario['avatar'];
 
-            $newPost->likes = 0;
-            $newPost->liked = false;
-            $newPost->comentarios = [];
+            $newPost->likes = count(Like::select()->where('post_id', $post['id'])->get());
+            $newPost->liked = self::isLiked($post['id'], $usuario);
+
+          
+            $newPost->comentarios = Comentario::select()->where('post_id', $post['id'])->get();
+            foreach($newPost->comentarios as $key => $comentario) {
+                $newPost->comentarios[$key]['usuario'] = Usuario::select()->where('id', $comentario['usuario_id'])->one();
+            }
             
             $posts[] = $newPost;
         }
@@ -84,5 +92,54 @@ class PostHandlers {
         return $fotos;
     }
 
+    public static function isLiked($id, $loggedUserId) {
+        return count(Like::select()->where('post_id', $id)->where('usuario_id', $loggedUserId)->get()) > 0? true: false;
+    }
+
+    public static function deleteLike($id, $loggedUserId) {
+        Like::delete()
+            ->where('post_id', $id)
+            ->where('usuario_id', $loggedUserId)
+        ->execute();
+    }
+
+    public static function addLike($id, $loggedUserId) {
+        Like::insert([
+            'post_id' => $id,
+            'usuario_id' => $loggedUserId,
+            'data' => date('Y-m-d H:i:s')
+        ])->execute();
+    }
+
+    public static function addComment($id, $txt, $loggedUserId) {
+        Comentario::insert([
+            'post_id' => $id,
+            'usuario_id' => $loggedUserId,
+            'data' => date('Y-m-d H:i:s'),
+            'conteudo' => $txt
+        ])->execute();
+    }
+
+    public static function delete($id, $loggedUserId) {
+        $post = Post::select()
+            ->where('id', $id)
+            ->where('usuario_id', $loggedUserId)
+        ->get();
+
+        if(count($post) > 0) {
+            $post = $post[0];
+
+            Like::delete()->where('post_id', $id)->execute();
+            Comentario::delete()->where('post_id', $id)->execute();
+
+            if($post['type'] === 'photo') {
+                $img = __DIR__.'/../../public/media/uploads/'.$post['body'];
+                if(file_exists($img)) {
+                    unlink($img);
+                }
+            }
+            Post::delete()->where('id', $id)->execute();
+        }
+    }
     
 }

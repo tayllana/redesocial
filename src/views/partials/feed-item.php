@@ -1,5 +1,5 @@
 
-<div class="box feed-item">
+<div class="box feed-item" data-id="<?=$post->id?>">
     <div class="box-body">
         <div class="feed-item-head row mt-20 m-width-20">
             <div class="feed-item-head-photo">
@@ -33,16 +33,19 @@
             <div class="msg-btn" ><?= count($post->comentarios) ?></div>
         </div>
         <div class="feed-item-comments">
-
-            <!-- <div class="fic-item row m-height-10 m-width-20">
-                <div class="fic-item-photo">
-                    <a href=""><img src="<?= $base; ?>/media/avatars/<?= $post->usuario->avatar ?>" /></a>
-                </div>
-                <div class="fic-item-info">
-                    <a href=""><?= $post->usuario->nome ?></a>
-                    Comentando no meu próprio post
-                </div>
-            </div> -->
+            <div class="feed-item-comments-area">
+                <?php foreach($post->comentarios as $comentario): ?>
+                    <div class="fic-item row m-height-10 m-width-20">
+                        <div class="fic-item-photo">
+                            <a href="<?=$base;?>/perfil/<?=$comentario['usuario']['id'];?>"><img src="<?=$base;?>/media/avatars/<?=$comentario['usuario']['avatar'];?>" /></a>
+                        </div>
+                        <div class="fic-item-info">
+                            <a href="<?=$base;?>/perfil/<?=$comentario['usuario']['id'];?>"><?=$comentario['usuario']['nome'];?></a>
+                            <?=$comentario['conteudo'];?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
             <div class="fic-answer row m-height-10 m-width-20">
                 <div class="fic-item-photo">
