@@ -22,11 +22,23 @@
                 <span class="fidi-date"><?= date('d/m/Y', strtotime($post->data)); ?></span>
             </div>
             <div class="feed-item-head-btn">
-                <img src="<?=$base?>/assets/images/more.png" />
+                <img src="<?=$base;?>/assets/images/more.png" />
+                <div class="feed-item-more-window">
+                    <a href="<?=$base?>/post/<?=$post->id?>/delete">Excluir Post</a>
+                </div>
             </div>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
-            <?= nl2br($post->conteudo); ?>
+            <?php
+            switch($post->type) {
+                case 'text':
+                    echo nl2br($post->conteudo);
+                break;
+                case 'photo':
+                    echo '<img src="'.$base.'/media/uploads/'.$post->conteudo.'" />';
+                break;
+            }
+            ?>
         </div>
         <div class="feed-item-buttons row mt-20 m-width-20">
             <div class="like-btn <?= $post->liked? 'on': '' ?>" ><?= $post->likes ?></div>

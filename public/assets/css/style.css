@@ -233,13 +233,40 @@ header .head-side {
     display: none;
     color:#333;
 }
-.feed-new-send {
+.feed-new-send,
+.feed-new-photo {
     cursor: pointer;
     margin-right:5px;
 }
-.feed-new-send img {
+.feed-new-send img,
+.feed-new-photo img {
     width:25px;
     height:25px;
+}
+.feed-new-file {
+    position: absolute;
+    left: -500px;
+    top: -500px;
+}
+
+.feed-item-more-window {
+    position: absolute;
+    background-color: #FFF;
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #EEE;
+    border-radius: 3px;
+    margin-left: -130px;
+    display: none;
+}
+.feed-item-more-window a {
+    display: block;
+    padding: 7px;
+    text-decoration: none;
+    color: #000;
+}
+.feed-item-more-window a:hover {
+    background-color: #CCC;
 }
 
 .banners .box-body {
