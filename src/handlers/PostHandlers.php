@@ -17,13 +17,11 @@ class PostHandlers {
             $newPost->type = $post['type'];
             $newPost->data = $post['data'];
             $newPost->conteudo = $post['conteudo'];
-            $newPost->meu = false;
+            $newPost->meu = $post['usuario_id'] == $usuario;
 
-            if($post['id'] == $usuario){
-                $newPost->meu = true;
-            }
+           
             
-            $newUsuario = Usuario::select()->where('id', $post['id_usuario'])->one();
+            $newUsuario = Usuario::select()->where('id', $post['usuario_id'])->one();
             $newPost->usuario = new Usuario();
             $newPost->usuario->id = $newUsuario['id'];
             $newPost->usuario->nome = $newUsuario['nome'];
@@ -44,8 +42,8 @@ class PostHandlers {
     }
     public static function getUserFeed($usuario, $pagina, $loggedUser){
 
-        $listPosts = Post::select()->where('id_usuario', $usuario)->orderBy('data', 'desc')->page($pagina, 3)->get();
-        $totalPosts = Post::select()->where('id_usuario', $usuario)->count();
+        $listPosts = Post::select()->where('usuario_id', $usuario)->orderBy('data', 'desc')->page($pagina, 3)->get();
+        $totalPosts = Post::select()->where('usuario_id', $usuario)->count();
         $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
         $posts = $posts = self::_postListToObject($listPosts, $loggedUser);
         return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
@@ -57,8 +55,8 @@ class PostHandlers {
             $amizades[] = $amigo['para'];
         }
         $amizades[] = $id;
-        $listPosts = Post::select()->where('id_usuario', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 3)->get();
-        $totalPosts = Post::select()->where('id_usuario', 'in', $amizades)->count();
+        $listPosts = Post::select()->where('usuario_id', 'in', $amizades)->orderBy('data', 'desc')->page($pagina, 3)->get();
+        $totalPosts = Post::select()->where('usuario_id', 'in', $amizades)->count();
         $qtdPaginas = ceil($totalPosts / 2); //2 é quantidade de posts por pagina
         $posts = self::_postListToObject($listPosts, $id);
         return ['posts' => $posts, 'qtdPaginas' => $qtdPaginas, 'paginaAtual' => $pagina];
@@ -68,7 +66,7 @@ class PostHandlers {
         try {
             if(!empty($usuario)){
                 Post::insert([
-                    'id_usuario' => $usuario, 
+                    'usuario_id' => $usuario, 
                     'type' => $tipo, 
                     'conteudo' => $conteudo
                 ])->execute();
@@ -79,7 +77,7 @@ class PostHandlers {
         }
     }
     public function getFotos($usuario){
-        $response = Post::select()->where('id_usuario', $usuario)->where('type', 'photo')->get();
+        $response = Post::select()->where('usuario_id', $usuario)->where('type', 'photo')->get();
         $fotos = [];
         foreach ($response as $key => $foto) {
             $newPost = new Post();

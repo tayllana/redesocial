@@ -13,6 +13,7 @@ $router->get('/cadastro', 'LoginController@signup');
 $router->post('/cadastro', 'LoginController@cadastro');
 
 $router->post('/post/new', 'PostController@new');
+$router->get('/post/{id}/delete', 'PostController@delete');
 
 $router->get('/perfil/{id}/fotos', 'PerfilController@photos');
 $router->get('/perfil/{id}/amigos', 'PerfilController@friends');

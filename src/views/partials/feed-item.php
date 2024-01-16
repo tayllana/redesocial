@@ -19,14 +19,16 @@
 
                 </span>
                 <br />
-                <span class="fidi-date"><?= date('d/m/Y', strtotime($post->data)); ?></span>
+                <span class="fidi-date"><?= date('d/m/Y', strtotime($post->data)); ?> </span>
             </div>
-            <div class="feed-item-head-btn">
-                <img src="<?=$base;?>/assets/images/more.png" />
-                <div class="feed-item-more-window">
-                    <a href="<?=$base?>/post/<?=$post->id?>/delete">Excluir Post</a>
+            <?php if($post->meu){ ?>
+                <div class="feed-item-head-btn">
+                    <img src="<?=$base;?>/assets/images/more.png" />
+                    <div class="feed-item-more-window">
+                        <a href="<?=$base?>/post/<?=$post->id?>/delete">Excluir Post</a>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
             <?php

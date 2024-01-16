@@ -57,7 +57,7 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
   `type` varchar(100) NOT NULL,
   `data` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `conteudo` text DEFAULT NULL
@@ -67,7 +67,7 @@ CREATE TABLE `posts` (
 -- Despejando dados para a tabela `posts`
 --
 
-INSERT INTO `posts` (`id`, `id_usuario`, `type`, `data`, `conteudo`) VALUES
+INSERT INTO `posts` (`id`, `usuario_id`, `type`, `data`, `conteudo`) VALUES
 (1, 4, 'text', '2023-12-19 19:11:39', 'drg'),
 (2, 4, 'text', '2023-12-19 19:11:47', 'fscd'),
 (3, 5, 'text', '2023-12-19 19:11:25', 'dvsd'),

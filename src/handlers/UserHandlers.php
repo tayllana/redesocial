@@ -23,7 +23,7 @@ class UserHandlers {
     public static function verifyLogin($email, $password){
         $user = Usuario::select()->where('email',$email)->one();
         if($user){
-            if(password_verify($password, $user['password'])){
+            if(password_verify($password, $user['senha'])){
                 $token = md5(time().rand(0,9999).time());
                 Usuario::update()->set('token', $token)->where('id', $user['id'])->execute();
                 $_SESSION['usuario'] = $user;
